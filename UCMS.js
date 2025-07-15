@@ -1,4 +1,4 @@
-const { serverURL } = require("./config.js")``;
+const { serverURL } = require("./config.js");
 
 const bot = BotManager.getCurrentBot();
 
