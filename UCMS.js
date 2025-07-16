@@ -1,5 +1,3 @@
-load("config.js");
-
 const bot = BotManager.getCurrentBot();
 
 function fetchData(url) {
@@ -71,6 +69,11 @@ function onCreate(savedInstanceState, activity) {
   textView.setText("Hello, World!");
   textView.setTextColor(android.graphics.Color.DKGRAY);
   activity.setContentView(textView);
+
+  if (Database.exists("config.txt")) {
+    bot.send("이경호", Database.readString("config.txt"));
+  }
+
   bot.send("이경호", "Bot Activated");
 }
 
