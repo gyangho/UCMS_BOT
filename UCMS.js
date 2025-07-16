@@ -36,6 +36,7 @@ function fetchData(url) {
  * (bigint) msg.channelId: 각 방의 고유 id
  */
 function onMessage(msg) {
+  msg.reply(msg.room);
   bot.send("이경호", "Bot Activated");
 }
 bot.addListener(Event.MESSAGE, onMessage);
