@@ -35,7 +35,9 @@ function fetchData(url) {
  * (bigint) msg.logId: 각 메세지의 고유 id
  * (bigint) msg.channelId: 각 방의 고유 id
  */
-function onMessage(msg) {}
+function onMessage(msg) {
+  bot.send("이경호", "Bot Activated");
+}
 bot.addListener(Event.MESSAGE, onMessage);
 
 /**
@@ -74,7 +76,7 @@ function onCreate(savedInstanceState, activity) {
     bot.send("이경호", Database.readString("config.txt"));
   }
 
-  bot.send("이경호", "Bot Activated");
+  bot.can;
 }
 
 function onStart(activity) {}
