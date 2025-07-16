@@ -1,4 +1,4 @@
-const { serverURL } = require("./config.js");
+load("config.js");
 
 const bot = BotManager.getCurrentBot();
 
@@ -71,6 +71,7 @@ function onCreate(savedInstanceState, activity) {
   textView.setText("Hello, World!");
   textView.setTextColor(android.graphics.Color.DKGRAY);
   activity.setContentView(textView);
+  bot.send("이경호", "Bot Activated");
 }
 
 function onStart(activity) {}
