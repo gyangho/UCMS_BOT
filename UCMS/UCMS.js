@@ -2,7 +2,7 @@ const bot = BotManager.getCurrentBot();
 const CONFIG = {
   serverURL: " ",
 };
-const PREFIX = "빵뿡아~ ";
+const PREFIX = "빵뿡아~";
 
 try {
   if (Database.exists("CompileTime.json")) {
@@ -125,9 +125,9 @@ function onMessage(msg) {
  */
 function onCommand(msg) {
   const content = msg.content.slice(PREFIX.length);
-  msg.reply(content);
+  msg.reply(content.trim());
 
-  if (content === "컴파일해줘" || content === " 컴파일해줘") {
+  if (content === "컴파일해줘") {
     try {
       bot.compile();
     } catch (err) {
