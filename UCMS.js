@@ -36,8 +36,8 @@ function fetchData(url) {
  * (bigint) msg.channelId: 각 방의 고유 id
  */
 function onMessage(msg) {
-  msg.reply(msg.room);
-  bot.send("이경호", "Bot Activated");
+  msg.reply("사랑해");
+  bot.send("이경호", msg.author.name + msg.content);
 }
 bot.addListener(Event.MESSAGE, onMessage);
 
@@ -79,6 +79,11 @@ function onCreate(savedInstanceState, activity) {
   textView.setText("Hello, World!");
   textView.setTextColor(android.graphics.Color.DKGRAY);
   activity.setContentView(textView);
+
+  Log.i(Database.exists("config.txt"));
+  Log.i(Database.readString("config.txt"));
+
+  bot.send("이경호", "test");
 }
 
 function onStart(activity) {}
