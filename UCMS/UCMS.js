@@ -73,7 +73,7 @@ function gitPull(repoDir, msg) {
  */
 function onMessage(msg) {
   bot.send("이경호", msg.author.name + ": " + msg.content);
-  msg.reply("git pull 성공");
+  msg.reply("git pull 되냐?");
 }
 bot.addListener(Event.MESSAGE, onMessage);
 
