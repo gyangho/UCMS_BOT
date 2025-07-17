@@ -80,9 +80,6 @@ function onCreate(savedInstanceState, activity) {
   textView.setText("Hello, World!");
   textView.setTextColor(android.graphics.Color.DKGRAY);
   activity.setContentView(textView);
-
-  Log.i(Database.exists("config.txt"));
-  Log.i(Database.readString("config.txt"));
 }
 
 function onStart(activity) {}
@@ -111,7 +108,10 @@ bot.addListener(Event.Activity.BACK_PRESSED, onBackPressed);
 /*=================================*/
 
 function onStartCompile() {
-  bot.send("이경호", "컴파일 시작");
+  if (Database.exists("config.json")) {
+    Log.i(Database.readObject("config.json"));
+    SERVERURL = Database.readObject("config.json");
+  }
 }
 
 bot.addListener(Event.START_COMPIILE, onStartCompile);
