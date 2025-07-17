@@ -79,7 +79,12 @@ function fetchData(url) {
       .ignoreContentType(true)
       .execute();
 
-    return response;
+    const body = response.body();
+    if (!body) return null;
+
+    const data = JSON.parse(body);
+
+    return data.message;
   } catch (e) {
     const newErr = new Error(`API 호출 오류: ${e}`);
     throw newErr;
