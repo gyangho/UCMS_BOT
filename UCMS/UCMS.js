@@ -3,7 +3,7 @@ const CONFIG = {
   serverURL: " ",
   gitAccessKey: " ",
 };
-const PREFIX = "빵뿡아";
+const PREFIX = "빵뿡아~";
 
 try {
   if (Database.exists("CompileTime.json")) {
