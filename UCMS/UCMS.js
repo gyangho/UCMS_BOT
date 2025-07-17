@@ -108,9 +108,10 @@ function fetchData(url) {
  * (bigint) msg.channelId: 각 방의 고유 id
  */
 function onMessage(msg) {
-  msg.reply("onMessage" + msg.content);
   if (msg.content === "초기화") {
     init();
+  } else {
+    msg.reply("빵뿡이는 아직 이런거 몰라용❗❗ 👉👈");
   }
 }
 
