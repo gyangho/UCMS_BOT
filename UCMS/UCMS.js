@@ -23,35 +23,14 @@ function fetchData(url) {
   }
 }
 
-// gitUtils.js
-
-var Git = Packages.org.eclipse.jgit.api.Git;
-var File = Packages.java.io.File;
-var FileRepositoryBuilder = Packages.org.eclipse.jgit.storage.file.FileRepositoryBuilder;
-var UsernamePasswordCredentialsProvider =
-  Packages.org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
-
-function gitPull(repoDir, username, password, msg) {
-  var builder = new FileRepositoryBuilder();
-  var repo = builder
-    .setGitDir(new File(repoDir + "/.git"))
-    .readEnvironment()
-    .findGitDir()
-    .build();
-
-  var git = Git.wrap(repo);
-  var pullCommand = git.pull();
-
-  if (username && password) {
-    pullCommand.setCredentialsProvider(
-      new UsernamePasswordCredentialsProvider(username, password)
-    );
+function init(msg) {
+  if (Database.exists("config.json")) {
+    const config = Database.readObject("config.json");
+    CONFIG.serverURL = config.serverURL;
+    CONFIG.gitAccessKey = config.gitAccessKey;
+  } else {
+    msg.reply("Cannot Find File : config.json");
   }
-
-  var result = pullCommand.call();
-  msg.reply(result);
-  print("Pull successful? " + result.isSuccessful());
-  return result.isSuccessful();
 }
 
 /*
@@ -70,11 +49,7 @@ function gitPull(repoDir, username, password, msg) {
  * (bigint) msg.logId: 각 메세지의 고유 id
  * (bigint) msg.channelId: 각 방의 고유 id
  */
-function onMessage(msg) {
-  bot.send("이경호", msg.author.name + ": " + msg.content);
-  msg.reply(Packages.org.eclipse.jgit.storage);
-  msg.reply(typeof Packages.org.eclipse.jgit.storage.file.FileRepositoryBuilder);
-}
+function onMessage(msg) {}
 bot.addListener(Event.MESSAGE, onMessage);
 
 /**
@@ -101,20 +76,12 @@ function onCommand(msg) {
     } catch (err) {
       msg.reply(err);
     }
-  } else if (msg.content === "@init") {
-    if (Database.exists("config.json")) {
-      const config = Database.readObject("config.json");
-      CONFIG.serverURL = config.serverURL;
-      CONFIG.gitAccessKey = config.gitAccessKey;
-    } else {
-      msg.reply("Cannot Find File : config.json");
-    }
   } else {
     try {
       const url = `${serverURL}?content=${msg.content}&author=${msg.author.name}`;
       msg.reply(fetchData(url));
     } catch (err) {
-      msg.reply(err.code);
+      msg.reply(err);
     }
   }
 }
