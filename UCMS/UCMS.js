@@ -121,4 +121,3 @@ bot.addListener(Event.Activity.STOP, onStop);
 bot.addListener(Event.Activity.RESTART, onRestart);
 bot.addListener(Event.Activity.DESTROY, onDestroy);
 bot.addListener(Event.Activity.BACK_PRESSED, onBackPressed);
-bot.addListener(Event.START_COMPILE, onStartCompile);
