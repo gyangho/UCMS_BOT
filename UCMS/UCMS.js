@@ -71,7 +71,7 @@ function onCommand(msg) {
 
   if (msg.content === "@컴파일") {
     try {
-      gitPull("./", "gyangho", CONFIG.gitAccessKey, msg);
+      msg.reply("컴파일을 시작합니다.");
       bot.compile();
     } catch (err) {
       msg.reply(err);
