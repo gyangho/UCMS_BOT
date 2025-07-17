@@ -43,19 +43,23 @@ function init() {
   } else {
     throw new Error("Cannot Find File : config.json");
   }
-  bot.removeAllListener();
+
+  bot.removeAllListeners(Event.MESSAGE);
+  bot.removeAllListeners(Event.COMMAND);
+  bot.removeAllListeners(Event.START_COMPILE);
+
   bot.addListener(Event.MESSAGE, onMessage);
   bot.setCommandPrefix(PREFIX); //@로 시작하는 메시지를 command로 판단
   bot.addListener(Event.COMMAND, onCommand);
-  bot.addListener(Event.START_COMPILE, onStartCompile);
-  bot.addListener(Event.Activity.CREATE, onCreate);
-  bot.addListener(Event.Activity.START, onStart);
-  bot.addListener(Event.Activity.RESUME, onResume);
-  bot.addListener(Event.Activity.PAUSE, onPause);
-  bot.addListener(Event.Activity.STOP, onStop);
-  bot.addListener(Event.Activity.RESTART, onRestart);
-  bot.addListener(Event.Activity.DESTROY, onDestroy);
-  bot.addListener(Event.Activity.BACK_PRESSED, onBackPressed);
+  // bot.addListener(Event.START_COMPILE, onStartCompile);
+  // bot.addListener(Event.Activity.CREATE, onCreate);
+  // bot.addListener(Event.Activity.START, onStart);
+  // bot.addListener(Event.Activity.RESUME, onResume);
+  // bot.addListener(Event.Activity.PAUSE, onPause);
+  // bot.addListener(Event.Activity.STOP, onStop);
+  // bot.addListener(Event.Activity.RESTART, onRestart);
+  // bot.addListener(Event.Activity.DESTROY, onDestroy);
+  // bot.addListener(Event.Activity.BACK_PRESSED, onBackPressed);
 
   sendToAdmin("🥳초기화 완료\n" + checkCostTime(T));
 }
