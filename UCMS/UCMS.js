@@ -51,7 +51,7 @@ function init() {
   bot.addListener(Event.MESSAGE, onMessage);
   bot.setCommandPrefix(PREFIX); //@로 시작하는 메시지를 command로 판단
   bot.addListener(Event.COMMAND, onCommand);
-  // bot.addListener(Event.START_COMPILE, onStartCompile);
+  bot.addListener(Event.START_COMPILE, onStartCompile);
   // bot.addListener(Event.Activity.CREATE, onCreate);
   // bot.addListener(Event.Activity.START, onStart);
   // bot.addListener(Event.Activity.RESUME, onResume);
