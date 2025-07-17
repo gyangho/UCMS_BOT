@@ -3,8 +3,9 @@ const CONFIG = {
   serverURL: " ",
   gitAccessKey: " ",
 };
+const PREFIX = "빵뿡아~";
 
-bot.setCommandPrefix("@"); //@로 시작하는 메시지를 command로 판단
+bot.setCommandPrefix(PREFIX); //@로 시작하는 메시지를 command로 판단
 bot.addListener(Event.COMMAND, onCommand);
 bot.addListener(Event.MESSAGE, onMessage);
 bot.addListener(Event.START_COMPILE, onStartCompile);
@@ -21,16 +22,18 @@ bot.addListener(Event.Activity.BACK_PRESSED, onBackPressed);
 try {
   if (Database.exists("CompileTime.json")) {
     let T = Database.readObject("CompileTime.json").T;
-    sendToAdmin("컴파일 완료\n[Cost Time: " + diffMs(new Date(), T) + "ms]");
+    sendToAdmin("👍컴파일 완료!\n" + "[⏱️: " + diffMs(new Date(), T) + "ms]");
   } else {
-    throw new Error("Compile Time Measure Error");
+    throw new Error("Time Measure Error");
   }
-  sendToAdmin("컴파일 완료");
-
   init();
-  sendToAdmin("초기화 완료");
 } catch (err) {
   sendToAdmin("[" + new Date().toLocaleString + "]\n" + err);
+}
+
+function checkCostTime(T) {
+  let ret = "[⏱️: " + diffMs(new Date(), T) + "ms]";
+  return ret;
 }
 
 function diffMs(a, b) {
@@ -40,21 +43,22 @@ function diffMs(a, b) {
 }
 
 function onStartCompile() {
-  sendToAdmin("컴파일 시작");
+  sendToAdmin("컴파일 시작....");
   Database.writeObject("CompileTime.json", {
     T: new Date(),
   });
 }
 
 function init() {
+  let T = new Date();
   if (Database.exists("config.json")) {
     const config = Database.readObject("config.json");
     CONFIG.serverURL = config.serverURL;
     CONFIG.gitAccessKey = config.gitAccessKey;
-    return 0;
   } else {
     throw new Error("Cannot Find File : config.json");
   }
+  sendToAdmin("🥳초기화 완료\n" + checkCostTime(T));
 }
 
 function sendToAdmin(content) {
@@ -117,9 +121,9 @@ function onMessage(msg) {}
  * (Array) msg.args: 명령어 인자 배열
  */
 function onCommand(msg) {
-  msg.reply("커맨드 수신: " + msg.content);
+  const content = msg.content.slice(PREFIX.length);
 
-  if (msg.content === "@컴파일") {
+  if (content === "컴파일해줘") {
     try {
       bot.compile();
     } catch (err) {
