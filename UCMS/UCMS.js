@@ -19,6 +19,42 @@ function fetchData(url) {
   }
 }
 
+  /**
+ * 주어진 디렉터리에서 'git pull'을 수행하고,
+ * stdout/stderr 결과를 모두 출력한 뒤, 종료 코드를 반환합니다.
+ *
+ * @param {String} repoDir - git pull을 실행할 작업 디렉터리 경로
+ * @returns {Number} 프로세스 종료 코드 (0 = 성공)
+ */
+
+function gitPull(repoDir, msg) {
+  // Java 클래스 가져오기
+  var ProcessBuilder = Packages.java.lang.ProcessBuilder;
+  var File            = Packages.java.io.File;
+  var BufferedReader  = Packages.java.io.BufferedReader;
+  var InputStreamReader = Packages.java.io.InputStreamReader;
+
+  // ProcessBuilder 준비
+  var pb = new ProcessBuilder(java.util.Arrays.asList("git", "pull", "origin", "main"));
+  pb.directory(new File(repoDir));
+  pb.redirectErrorStream(true); // stdout와 stderr를 합침
+
+  // 프로세스 시작
+  var process = pb.start();
+
+  // 출력 읽기
+  var reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+  var line;
+  while ((line = reader.readLine()) !== null) {
+    print(line);
+  }
+
+  // 완료 대기
+  var exitCode = process.waitFor();
+  msg.reply("git pull exited with code: " + exitCode);
+  return exitCode;
+}
+
 /*
  * (string) msg.content: 메시지의 내용
  * (string) msg.room: 메시지를 받은 방 이름
@@ -59,6 +95,7 @@ function onCommand(msg) {
 
   if (msg.content === "@컴파일") {
     try {
+      gitPull("./",msg)
       bot.compile();
     } catch (err) {
       msg.reply(err);
