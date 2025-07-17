@@ -21,7 +21,7 @@ bot.addListener(Event.Activity.BACK_PRESSED, onBackPressed);
 try {
   if (Database.exists("CompileTime.json")) {
     let T = Database.readObject("CompileTime.json").T;
-    sendToAdmin("컴파일 완료 \n [Cost Time: " + senddiffMs(new Date(), T) + "ms]");
+    sendToAdmin("컴파일 완료 \n [Cost Time: " + diffMs(new Date(), T) + "ms]");
   } else {
     throw new Error("Compile Time Measure Error");
   }
