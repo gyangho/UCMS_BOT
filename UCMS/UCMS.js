@@ -77,7 +77,7 @@ bot.addListener(Event.COMMAND, onCommand);
 
 function onCreate(savedInstanceState, activity) {
   var textView = new android.widget.TextView(activity);
-  textView.setText("Hello, World!");
+  textView.setText("뭐야이건");
   textView.setTextColor(android.graphics.Color.DKGRAY);
   activity.setContentView(textView);
 }
@@ -108,13 +108,7 @@ bot.addListener(Event.Activity.BACK_PRESSED, onBackPressed);
 /*=================================*/
 
 function onStartCompile() {
-  Log.i(Database.exists("config.json"));
-  if (Database.exists("config.json")) {
-    Log.i(Database.readObject("config.json"));
-    SERVERURL = Database.readObject("config.json");
-  } else {
-    Log.i("config.json파일을 찾을 수 없어요");
-  }
+  Log.i("compile");
 }
 
 bot.addListener(Event.START_COMPIILE, onStartCompile);
