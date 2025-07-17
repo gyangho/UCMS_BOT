@@ -21,7 +21,7 @@ bot.addListener(Event.Activity.BACK_PRESSED, onBackPressed);
 try {
   if (Database.exists("CompileTime.json")) {
     let T = Database.readObject("CompileTime.json").T;
-    sendToAdmin("컴파일 완료 \n [Cost Time: " + diffMs(new Date(), T) + "ms]");
+    sendToAdmin("컴파일 완료\n[Cost Time: " + diffMs(new Date(), T) + "ms]");
   } else {
     throw new Error("Compile Time Measure Error");
   }
@@ -36,7 +36,7 @@ try {
 function diffMs(a, b) {
   const t1 = new Date(a).getTime();
   const t2 = new Date(b).getTime();
-  return t2 - t1;
+  return t1 - t2;
 }
 
 function onStartCompile() {
