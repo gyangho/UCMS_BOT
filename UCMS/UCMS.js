@@ -43,6 +43,7 @@ function init() {
   } else {
     throw new Error("Cannot Find File : config.json");
   }
+  bot.removeAllListener();
   bot.addListener(Event.MESSAGE, onMessage);
   bot.setCommandPrefix(PREFIX); //@로 시작하는 메시지를 command로 판단
   bot.addListener(Event.COMMAND, onCommand);
