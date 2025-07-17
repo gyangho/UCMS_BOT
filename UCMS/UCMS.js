@@ -93,6 +93,7 @@ function fetchData(url) {
 function onMessage(msg) {
   msg.reply(msg.content);
 }
+bot.addListener(Event.MESSAGE, onMessage);
 
 /**
  * (string) msg.content: 메시지의 내용
@@ -127,6 +128,8 @@ function onCommand(msg) {
     }
   }
 }
+bot.setCommandPrefix(PREFIX); //@로 시작하는 메시지를 command로 판단
+bot.addListener(Event.COMMAND, onCommand);
 
 function onCreate(savedInstanceState, activity) {
   var textView = new android.widget.TextView(activity);
@@ -149,9 +152,6 @@ function onDestroy(activity) {}
 
 function onBackPressed(activity) {}
 
-bot.setCommandPrefix(PREFIX); //@로 시작하는 메시지를 command로 판단
-bot.addListener(Event.COMMAND, onCommand);
-bot.addListener(Event.MESSAGE, onMessage);
 bot.addListener(Event.START_COMPILE, onStartCompile);
 
 bot.addListener(Event.Activity.CREATE, onCreate);
