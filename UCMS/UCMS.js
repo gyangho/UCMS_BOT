@@ -40,7 +40,7 @@ function diffMs(a, b) {
 }
 
 function onStartCompile() {
-  Database.writeObject("CompileTime.json", {
+  Database.writeObject("config.json", {
     T: new Date(),
   });
 }
