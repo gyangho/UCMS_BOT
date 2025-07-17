@@ -124,8 +124,8 @@ function onMessage(msg) {
  * (Array) msg.args: 명령어 인자 배열
  */
 function onCommand(msg) {
-  const content = msg.content.slice(PREFIX.length);
-  msg.reply(content.trim());
+  const content = msg.content.slice(PREFIX.length).trim();
+  msg.reply(content);
 
   if (content === "컴파일해줘") {
     try {
