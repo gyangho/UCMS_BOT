@@ -19,7 +19,6 @@ const bot = BotManager.getCurrentBot();
 function onMessage(msg) {}
 bot.addListener(Event.MESSAGE, onMessage);
 
-
 /**
  * (string) msg.content: 메시지의 내용
  * (string) msg.room: 메시지를 받은 방 이름
@@ -34,10 +33,21 @@ bot.addListener(Event.MESSAGE, onMessage);
  * (string) msg.command: 명령어 이름
  * (Array) msg.args: 명령어 인자 배열
  */
-function onCommand(msg) {}
-bot.setCommandPrefix("@"); //@로 시작하는 메시지를 command로 판단
+function onCommand(msg) {
+  const prefix = "@controller";
+  const content = msg.content.slice(prefix.length);
+  if (content.startsWith("컴파일 ")) {
+    try {
+      BotManager.compile(content.slice("컴파일 "));
+    } catch (err) {
+      msg.reply(err);
+    }
+  } else if (content === "봇 목록" || "봇 리스트") {
+    msg.reply(getBotList().toString());
+  }
+}
+bot.setCommandPrefix("@controller"); //@로 시작하는 메시지를 command로 판단
 bot.addListener(Event.COMMAND, onCommand);
-
 
 function onCreate(savedInstanceState, activity) {
   var textView = new android.widget.TextView(activity);
