@@ -104,6 +104,9 @@ function fetchData(url) {
  */
 function onMessage(msg) {
   msg.reply(msg.content);
+  if (msg.content === "초기화") {
+    init();
+  }
 }
 
 /**
