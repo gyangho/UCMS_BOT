@@ -14,8 +14,8 @@ function fetchData(url) {
 
     return data;
   } catch (e) {
-    Log.e("API 요청 오류: " + e);
-    return null;
+    new nerErr = new Error(`API 호출 오류: ${e}`);
+    throw(newErr);
   }
 }
 
@@ -68,11 +68,11 @@ function onCommand(msg) {
       const url = `${serverURL}?content=${msg.content}&author=${msg.author.name}`;
       msg.reply(fetchData(url));
     } catch (err) {
-      msg.reply(err);
+      msg.reply(err.code);
     }
   }
 }
-bot.setCommandPrefix("@"); //@로 시작하는 메시지를 command로 판단
+bot.setCommandPrefix("/"); //@로 시작하는 메시지를 command로 판단
 bot.addListener(Event.COMMAND, onCommand);
 
 function onCreate(savedInstanceState, activity) {
@@ -104,11 +104,3 @@ bot.addListener(Event.Activity.STOP, onStop);
 bot.addListener(Event.Activity.RESTART, onRestart);
 bot.addListener(Event.Activity.DESTROY, onDestroy);
 bot.addListener(Event.Activity.BACK_PRESSED, onBackPressed);
-
-/*=================================*/
-
-function onStartCompile() {
-  Log.i("compile");
-}
-
-bot.addListener(Event.START_COMPIILE, onStartCompile);
