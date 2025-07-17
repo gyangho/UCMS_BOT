@@ -108,9 +108,12 @@ bot.addListener(Event.Activity.BACK_PRESSED, onBackPressed);
 /*=================================*/
 
 function onStartCompile() {
+  Log.i(Database.exists("config.json"));
   if (Database.exists("config.json")) {
     Log.i(Database.readObject("config.json"));
     SERVERURL = Database.readObject("config.json");
+  } else {
+    Log.i("config.json파일을 찾을 수 없어요");
   }
 }
 
