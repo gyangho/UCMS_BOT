@@ -66,16 +66,17 @@ bot.addListener(Event.MESSAGE, onMessage);
  * (string) msg.command: 명령어 이름
  * (Array) msg.args: 명령어 인자 배열
  */
-async function onCommand(msg) {
+function onCommand(msg) {
   msg.reply("커맨드 수신: " + msg.content);
 
   if (msg.content === "@컴파일") {
     try {
       msg.reply("컴파일을 시작합니다.");
-      let ret = await bot.compile();
-      if (ret) {
-        msg.reply("컴파일 성공.");
-      }
+      bot.compile((ret) => {
+        if (ret) {
+          msg.reply("컴파일 성공.");
+        }
+      });
     } catch (err) {
       msg.reply(err);
     }
