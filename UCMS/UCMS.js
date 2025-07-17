@@ -4,13 +4,63 @@ const CONFIG = {
   gitAccessKey: " ",
 };
 
-function init(msg) {
+bot.setCommandPrefix("@"); //@로 시작하는 메시지를 command로 판단
+bot.addListener(Event.COMMAND, onCommand);
+bot.addListener(Event.MESSAGE, onMessage);
+bot.addListener(Event.START_COMPILE, onStartCompile);
+
+bot.addListener(Event.Activity.CREATE, onCreate);
+bot.addListener(Event.Activity.START, onStart);
+bot.addListener(Event.Activity.RESUME, onResume);
+bot.addListener(Event.Activity.PAUSE, onPause);
+bot.addListener(Event.Activity.STOP, onStop);
+bot.addListener(Event.Activity.RESTART, onRestart);
+bot.addListener(Event.Activity.DESTROY, onDestroy);
+bot.addListener(Event.Activity.BACK_PRESSED, onBackPressed);
+
+try {
+  if (Database.exists("CompileTime.json")) {
+    let T = Database.readObject("ComplieTime.json").T;
+    sendToAdmin("컴파일 완료 \n [Cost Time: " + senddiffMs(new Date(), T) + "ms]");
+  } else {
+    throw new Error("Compile Time Measure Error");
+  }
+  sendToAdmin("컴파일 완료");
+
+  init();
+  sendToAdmin("초기화 완료");
+} catch (err) {
+  sendToAdmin("[" + new Date().toLocaleString + "]\n" + err);
+}
+
+function diffMs(a, b) {
+  const t1 = new Date(a).getTime();
+  const t2 = new Date(b).getTime();
+  return t2 - t1;
+}
+
+function onStartCompile() {
+  Database.writeObject("CompileTime.json", {
+    T: new Date(),
+  });
+}
+
+function init() {
   if (Database.exists("config.json")) {
     const config = Database.readObject("config.json");
     CONFIG.serverURL = config.serverURL;
     CONFIG.gitAccessKey = config.gitAccessKey;
+    return 0;
   } else {
-    msg.reply("Cannot Find File : config.json");
+    throw new Error("Cannot Find File : config.json");
+  }
+}
+
+function sendToAdmin(content) {
+  admin = "이경호";
+
+  if (!bot.send(admin, content, "com.kakao.talk")) {
+    Log.e("[sendToAdmin] Fail");
   }
 }
 
@@ -33,8 +83,6 @@ function fetchData(url) {
   }
 }
 
-bot.send("이경호", "컴파일 완료", "com.kakao.talk");
-
 /*
  * (string) msg.content: 메시지의 내용
  * (string) msg.room: 메시지를 받은 방 이름
@@ -52,7 +100,6 @@ bot.send("이경호", "컴파일 완료", "com.kakao.talk");
  * (bigint) msg.channelId: 각 방의 고유 id
  */
 function onMessage(msg) {}
-bot.addListener(Event.MESSAGE, onMessage);
 
 /**
  * (string) msg.content: 메시지의 내용
@@ -90,12 +137,10 @@ function onCommand(msg) {
     }
   }
 }
-bot.setCommandPrefix("@"); //@로 시작하는 메시지를 command로 판단
-bot.addListener(Event.COMMAND, onCommand);
 
 function onCreate(savedInstanceState, activity) {
   var textView = new android.widget.TextView(activity);
-  textView.setText("뭐야이건");
+  textView.setText("?");
   textView.setTextColor(android.graphics.Color.DKGRAY);
   activity.setContentView(textView);
 }
@@ -113,12 +158,3 @@ function onRestart(activity) {}
 function onDestroy(activity) {}
 
 function onBackPressed(activity) {}
-
-bot.addListener(Event.Activity.CREATE, onCreate);
-bot.addListener(Event.Activity.START, onStart);
-bot.addListener(Event.Activity.RESUME, onResume);
-bot.addListener(Event.Activity.PAUSE, onPause);
-bot.addListener(Event.Activity.STOP, onStop);
-bot.addListener(Event.Activity.RESTART, onRestart);
-bot.addListener(Event.Activity.DESTROY, onDestroy);
-bot.addListener(Event.Activity.BACK_PRESSED, onBackPressed);
