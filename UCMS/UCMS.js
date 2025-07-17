@@ -14,12 +14,12 @@ function fetchData(url) {
 
     return data;
   } catch (e) {
-    new nerErr = new Error(`API 호출 오류: ${e}`);
-    throw(newErr);
+    const nerErr = new Error(`API 호출 오류: ${e}`);
+    throw newErr;
   }
 }
 
-  /**
+/**
  * 주어진 디렉터리에서 'git pull'을 수행하고,
  * stdout/stderr 결과를 모두 출력한 뒤, 종료 코드를 반환합니다.
  *
@@ -30,8 +30,8 @@ function fetchData(url) {
 function gitPull(repoDir, msg) {
   // Java 클래스 가져오기
   var ProcessBuilder = Packages.java.lang.ProcessBuilder;
-  var File            = Packages.java.io.File;
-  var BufferedReader  = Packages.java.io.BufferedReader;
+  var File = Packages.java.io.File;
+  var BufferedReader = Packages.java.io.BufferedReader;
   var InputStreamReader = Packages.java.io.InputStreamReader;
 
   // ProcessBuilder 준비
@@ -95,7 +95,7 @@ function onCommand(msg) {
 
   if (msg.content === "@컴파일") {
     try {
-      gitPull("./",msg)
+      gitPull("./", msg);
       bot.compile();
     } catch (err) {
       msg.reply(err);
