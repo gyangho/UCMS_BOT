@@ -105,7 +105,7 @@ function fetchData(url) {
  * (bigint) msg.channelId: 각 방의 고유 id
  */
 function onMessage(msg) {
-  msg.reply(content);
+  msg.reply(msg.content);
 }
 
 /**
