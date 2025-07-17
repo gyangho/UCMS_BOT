@@ -1,0 +1,44 @@
+{
+    "chats": [
+        {
+            "sender": "DEBUG SENDER",
+            "content": "eee",
+            "timeMillis": 1752567599873,
+            "isBot": false,
+            "isLong": false,
+            "long": "\/storage\/emulated\/0\/Movies\/dev\/Bots\/UCMS\/DebugRoom\/message\/1752567599873-10149839687740}"
+        },
+        {
+            "sender": "UCMS",
+            "content": "Hello, world!",
+            "timeMillis": 1752567599896,
+            "isBot": true,
+            "isLong": false,
+            "long": "\/storage\/emulated\/0\/Movies\/dev\/Bots\/UCMS\/DebugRoom\/message\/1752567599896-10149851612948}"
+        },
+        {
+            "sender": "DEBUG SENDER",
+            "content": "ddddd",
+            "timeMillis": 1752567607029,
+            "isBot": false,
+            "isLong": false,
+            "long": "\/storage\/emulated\/0\/Movies\/dev\/Bots\/UCMS\/DebugRoom\/message\/1752567607029-10156985541851}"
+        },
+        {
+            "sender": "UCMS",
+            "content": "Hello, world!",
+            "timeMillis": 1752567607040,
+            "isBot": true,
+            "isLong": false,
+            "long": "\/storage\/emulated\/0\/Movies\/dev\/Bots\/UCMS\/DebugRoom\/message\/1752567607040-10156995758987}"
+        },
+        {
+            "sender": "DEBUG SENDER",
+            "content": "hello",
+            "timeMillis": 1752569535328,
+            "isBot": false,
+            "isLong": false,
+            "long": "\/storage\/emulated\/0\/Movies\/dev\/Bots\/UCMS\/DebugRoom\/message\/1752569535328-12085283644710}"
+        }
+    ]
+}

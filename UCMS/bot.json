@@ -4,6 +4,8 @@
         "apiLevel": 2,
         "useConsoleApi": true,
         "useBabel": false,
-        "scriptPower": true
+        "scriptPower": true,
+        "useUnifiedParams": true,
+        "optimization": -1
     }
 }
