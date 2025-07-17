@@ -35,9 +35,7 @@ function fetchData(url) {
  * (bigint) msg.logId: 각 메세지의 고유 id
  * (bigint) msg.channelId: 각 방의 고유 id
  */
-function onMessage(msg) {
-  bot.send("이경호", msg.author.name + ": " + msg.content);
-}
+function onMessage(msg) {}
 bot.addListener(Event.MESSAGE, onMessage);
 
 /**
@@ -72,7 +70,7 @@ function onCommand(msg) {
     }
   }
 }
-bot.setCommandPrefix("@"); //@로 시작하는 메시지를 command로 판단
+bot.setCommandPrefix("/"); //@로 시작하는 메시지를 command로 판단
 bot.addListener(Event.COMMAND, onCommand);
 
 function onCreate(savedInstanceState, activity) {
