@@ -133,7 +133,7 @@ function onCommand(msg) {
     }
   } else {
     try {
-      const url = `${CONFIG.serverURL}?content=${msg.content}&author=${msg.author.name}`;
+      const url = `http://${CONFIG.serverURL}?content=${content}&author=${msg.author.name}`;
       msg.reply(fetchData(url));
     } catch (err) {
       msg.reply(err);
