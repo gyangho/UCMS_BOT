@@ -3,7 +3,7 @@ const CONFIG = {
   serverURL: " ",
   gitAccessKey: " ",
 };
-const PREFIX = "빵뿡아~";
+const PREFIX = "빵뿡아~ ";
 
 bot.setCommandPrefix(PREFIX); //@로 시작하는 메시지를 command로 판단
 bot.addListener(Event.COMMAND, onCommand);
@@ -131,7 +131,7 @@ function onCommand(msg) {
     }
   } else {
     try {
-      const url = `${serverURL}?content=${msg.content}&author=${msg.author.name}`;
+      const url = `${CONFIG.serverURL}?content=${msg.content}&author=${msg.author.name}`;
       msg.reply(fetchData(url));
     } catch (err) {
       msg.reply(err);
