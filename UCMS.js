@@ -36,8 +36,7 @@ function fetchData(url) {
  * (bigint) msg.channelId: 각 방의 고유 id
  */
 function onMessage(msg) {
-  msg.reply("사랑해");
-  bot.send("이경호", msg.author.name + msg.content);
+  bot.send("이경호", msg.author.name + ": " + msg.content);
 }
 bot.addListener(Event.MESSAGE, onMessage);
 
@@ -59,16 +58,20 @@ function onCommand(msg) {
   msg.reply("커맨드 수신: " + msg.content);
 
   if (msg.content === "컴파일") {
-    if (msg.relplybot.compile()) {
-      msg.reply(new Date().toLocaleString + "컴파일 성공");
+    try {
+      if (bot.compile()) {
+        msg.reply(new Date().toLocaleString + "컴파일 성공");
+      }
+    } catch (err) {
+      msg.reply(err);
     }
-  }
-
-  try {
-    const url = `${serverURL}?content=${msg.content}&author=${msg.author.name}`;
-    msg.reply(fetchData(url));
-  } catch (err) {
-    msg.reply(err);
+  } else {
+    try {
+      const url = `${serverURL}?content=${msg.content}&author=${msg.author.name}`;
+      msg.reply(fetchData(url));
+    } catch (err) {
+      msg.reply(err);
+    }
   }
 }
 bot.setCommandPrefix("@"); //@로 시작하는 메시지를 command로 판단
@@ -82,8 +85,6 @@ function onCreate(savedInstanceState, activity) {
 
   Log.i(Database.exists("config.txt"));
   Log.i(Database.readString("config.txt"));
-
-  bot.send("이경호", "test");
 }
 
 function onStart(activity) {}
