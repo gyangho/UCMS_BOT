@@ -3,7 +3,7 @@ const CONFIG = {
   serverURL: " ",
   gitAccessKey: " ",
 };
-const PREFIX = "빵뿡아~ ";
+const PREFIX = "빵뿡아";
 
 try {
   if (Database.exists("CompileTime.json")) {
@@ -44,6 +44,19 @@ function init() {
   } else {
     throw new Error("Cannot Find File : config.json");
   }
+  bot.addListener(Event.MESSAGE, onMessage);
+  bot.setCommandPrefix(PREFIX); //@로 시작하는 메시지를 command로 판단
+  bot.addListener(Event.COMMAND, onCommand);
+  bot.addListener(Event.START_COMPILE, onStartCompile);
+  bot.addListener(Event.Activity.CREATE, onCreate);
+  bot.addListener(Event.Activity.START, onStart);
+  bot.addListener(Event.Activity.RESUME, onResume);
+  bot.addListener(Event.Activity.PAUSE, onPause);
+  bot.addListener(Event.Activity.STOP, onStop);
+  bot.addListener(Event.Activity.RESTART, onRestart);
+  bot.addListener(Event.Activity.DESTROY, onDestroy);
+  bot.addListener(Event.Activity.BACK_PRESSED, onBackPressed);
+
   sendToAdmin("🥳초기화 완료\n" + checkCostTime(T));
 }
 
@@ -93,7 +106,6 @@ function fetchData(url) {
 function onMessage(msg) {
   msg.reply(msg.content);
 }
-bot.addListener(Event.MESSAGE, onMessage);
 
 /**
  * (string) msg.content: 메시지의 내용
@@ -128,8 +140,6 @@ function onCommand(msg) {
     }
   }
 }
-bot.setCommandPrefix(PREFIX); //@로 시작하는 메시지를 command로 판단
-bot.addListener(Event.COMMAND, onCommand);
 
 function onCreate(savedInstanceState, activity) {
   var textView = new android.widget.TextView(activity);
@@ -151,14 +161,3 @@ function onRestart(activity) {}
 function onDestroy(activity) {}
 
 function onBackPressed(activity) {}
-
-bot.addListener(Event.START_COMPILE, onStartCompile);
-
-bot.addListener(Event.Activity.CREATE, onCreate);
-bot.addListener(Event.Activity.START, onStart);
-bot.addListener(Event.Activity.RESUME, onResume);
-bot.addListener(Event.Activity.PAUSE, onPause);
-bot.addListener(Event.Activity.STOP, onStop);
-bot.addListener(Event.Activity.RESTART, onRestart);
-bot.addListener(Event.Activity.DESTROY, onDestroy);
-bot.addListener(Event.Activity.BACK_PRESSED, onBackPressed);
