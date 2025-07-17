@@ -33,6 +33,8 @@ function fetchData(url) {
   }
 }
 
+bot.send("이경호", "컴파일 완료", "com.kakao.talk");
+
 /*
  * (string) msg.content: 메시지의 내용
  * (string) msg.room: 메시지를 받은 방 이름
@@ -72,11 +74,10 @@ function onCommand(msg) {
   if (msg.content === "@컴파일") {
     try {
       msg.reply("컴파일을 시작합니다.");
-      bot.compile((ret) => {
-        if (ret) {
-          bot.send("이경호", "컴파일 완료", "com.kakao.talk");
-        }
-      });
+      let ret = bot.compile();
+      if (ret) {
+        bot.send("이경호", "컴파일 완료", "com.kakao.talk");
+      }
     } catch (err) {
       msg.reply(err);
     }
