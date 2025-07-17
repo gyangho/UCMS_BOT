@@ -110,7 +110,7 @@ function onCommand(msg) {
     }
   }
 }
-bot.setCommandPrefix("/"); //@로 시작하는 메시지를 command로 판단
+bot.setCommandPrefix("@"); //@로 시작하는 메시지를 command로 판단
 bot.addListener(Event.COMMAND, onCommand);
 
 function onCreate(savedInstanceState, activity) {
