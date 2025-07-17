@@ -111,7 +111,6 @@ function onMessage(msg) {
   if (msg.content === "초기화") {
     init();
   } else {
-    msg.reply("빵뿡이는 아직 이런거 몰라용❗❗ 👉👈");
   }
 }
 
