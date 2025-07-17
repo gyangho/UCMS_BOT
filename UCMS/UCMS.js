@@ -40,6 +40,7 @@ function diffMs(a, b) {
 }
 
 function onStartCompile() {
+  sendToAdmin("컴파일 시작");
   Database.writeObject("config.json", {
     T: new Date(),
   });
@@ -120,11 +121,7 @@ function onCommand(msg) {
 
   if (msg.content === "@컴파일") {
     try {
-      msg.reply("컴파일을 시작합니다.");
-      let ret = bot.compile();
-      if (ret) {
-        bot.send("이경호", "컴파일 완료", "com.kakao.talk");
-      }
+      bot.compile();
     } catch (err) {
       msg.reply(err);
     }
