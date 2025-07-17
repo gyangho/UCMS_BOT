@@ -74,7 +74,7 @@ function onCommand(msg) {
       msg.reply("컴파일을 시작합니다.");
       bot.compile((ret) => {
         if (ret) {
-          msg.reply("컴파일 성공.");
+          bot.send("이경호", "컴파일 완료", "com.kakao.talk");
         }
       });
     } catch (err) {
