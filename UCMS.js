@@ -57,6 +57,13 @@ bot.addListener(Event.MESSAGE, onMessage);
  */
 function onCommand(msg) {
   msg.reply("커맨드 수신: " + msg.content);
+
+  if (msg.content === "컴파일") {
+    if (msg.relplybot.compile()) {
+      msg.reply(new Date().toLocaleString + "컴파일 성공");
+    }
+  }
+
   try {
     const url = `${serverURL}?content=${msg.content}&author=${msg.author.name}`;
     msg.reply(fetchData(url));
@@ -72,12 +79,6 @@ function onCreate(savedInstanceState, activity) {
   textView.setText("Hello, World!");
   textView.setTextColor(android.graphics.Color.DKGRAY);
   activity.setContentView(textView);
-
-  if (Database.exists("config.txt")) {
-    bot.send("이경호", Database.readString("config.txt"));
-  }
-
-  bot.can;
 }
 
 function onStart(activity) {}
