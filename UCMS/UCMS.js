@@ -72,7 +72,8 @@ async function onCommand(msg) {
   if (msg.content === "@컴파일") {
     try {
       msg.reply("컴파일을 시작합니다.");
-      if (await bot.compile()) {
+      let ret = await bot.compile();
+      if (ret) {
         msg.reply("컴파일 성공.");
       }
     } catch (err) {
