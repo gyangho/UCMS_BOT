@@ -23,36 +23,34 @@ function fetchData(url) {
   }
 }
 
-// JGit 주요 클래스 import
+// gitUtils.js
+
 var Git = Packages.org.eclipse.jgit.api.Git;
+var File = Packages.java.io.File;
 var FileRepositoryBuilder = Packages.org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 var UsernamePasswordCredentialsProvider =
   Packages.org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
 function gitPull(repoDir, username, password, msg) {
-  // 1) 기존 리포지토리 열기
-  var repo = new FileRepositoryBuilder()
-    .setGitDir(new Packages.java.io.File(repoDir + "/.git"))
+  var builder = new FileRepositoryBuilder();
+  var repo = builder
+    .setGitDir(new File(repoDir + "/.git"))
     .readEnvironment()
     .findGitDir()
     .build();
 
-  // 2) Git 객체 생성
   var git = Git.wrap(repo);
-  // 또는: Git.open(new File(repoDir))
-
-  // 3) Pull 호출 (인증이 필요 없으면 credentialsProvider 생략 가능)
   var pullCommand = git.pull();
+
   if (username && password) {
     pullCommand.setCredentialsProvider(
       new UsernamePasswordCredentialsProvider(username, password)
     );
   }
+
   var result = pullCommand.call();
-
-  // 4) 결과 확인
   msg.reply(result);
-
+  print("Pull successful? " + result.isSuccessful());
   return result.isSuccessful();
 }
 
