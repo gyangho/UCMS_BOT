@@ -72,7 +72,8 @@ function gitPull(repoDir, username, password, msg) {
  */
 function onMessage(msg) {
   bot.send("이경호", msg.author.name + ": " + msg.content);
-  msg.reply("06:20");
+  msg.reply(Packages.org.eclipse.jgit.storage);
+  msg.reply(typeof Packages.org.eclipse.jgit.storage.file.FileRepositoryBuilder);
 }
 bot.addListener(Event.MESSAGE, onMessage);
 
