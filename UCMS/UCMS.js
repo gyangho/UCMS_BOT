@@ -4,6 +4,16 @@ const CONFIG = {
   gitAccessKey: " ",
 };
 
+function init(msg) {
+  if (Database.exists("config.json")) {
+    const config = Database.readObject("config.json");
+    CONFIG.serverURL = config.serverURL;
+    CONFIG.gitAccessKey = config.gitAccessKey;
+  } else {
+    msg.reply("Cannot Find File : config.json");
+  }
+}
+
 function fetchData(url) {
   try {
     const response = org.jsoup.Jsoup.connect(url)
@@ -20,16 +30,6 @@ function fetchData(url) {
   } catch (e) {
     const newErr = new Error(`API 호출 오류: ${e}`);
     throw newErr;
-  }
-}
-
-function init(msg) {
-  if (Database.exists("config.json")) {
-    const config = Database.readObject("config.json");
-    CONFIG.serverURL = config.serverURL;
-    CONFIG.gitAccessKey = config.gitAccessKey;
-  } else {
-    msg.reply("Cannot Find File : config.json");
   }
 }
 
@@ -66,13 +66,15 @@ bot.addListener(Event.MESSAGE, onMessage);
  * (string) msg.command: 명령어 이름
  * (Array) msg.args: 명령어 인자 배열
  */
-function onCommand(msg) {
+async function onCommand(msg) {
   msg.reply("커맨드 수신: " + msg.content);
 
   if (msg.content === "@컴파일") {
     try {
       msg.reply("컴파일을 시작합니다.");
-      bot.compile();
+      if (await bot.compile()) {
+        msg.reply("컴파일 성공.");
+      }
     } catch (err) {
       msg.reply(err);
     }
@@ -117,3 +119,4 @@ bot.addListener(Event.Activity.STOP, onStop);
 bot.addListener(Event.Activity.RESTART, onRestart);
 bot.addListener(Event.Activity.DESTROY, onDestroy);
 bot.addListener(Event.Activity.BACK_PRESSED, onBackPressed);
+bot.addListener(Event.START_COMPILE, onStartCompile);
