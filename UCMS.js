@@ -59,9 +59,7 @@ function onCommand(msg) {
 
   if (msg.content === "@컴파일") {
     try {
-      if (bot.compile()) {
-        msg.reply(new Date().toLocaleString + "컴파일 성공");
-      }
+      bot.compile();
     } catch (err) {
       msg.reply(err);
     }
@@ -109,3 +107,11 @@ bot.addListener(Event.Activity.STOP, onStop);
 bot.addListener(Event.Activity.RESTART, onRestart);
 bot.addListener(Event.Activity.DESTROY, onDestroy);
 bot.addListener(Event.Activity.BACK_PRESSED, onBackPressed);
+
+/*=================================*/
+
+function onStartCompile() {
+  bot.send("이경호", "컴파일 시작");
+}
+
+bot.addListener(Event.START_COMPIILE, onStartCompile);
