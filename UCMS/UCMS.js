@@ -5,20 +5,6 @@ const CONFIG = {
 };
 const PREFIX = "빵뿡아~ ";
 
-bot.setCommandPrefix(PREFIX); //@로 시작하는 메시지를 command로 판단
-bot.addListener(Event.COMMAND, onCommand);
-bot.addListener(Event.MESSAGE, onMessage);
-bot.addListener(Event.START_COMPILE, onStartCompile);
-
-bot.addListener(Event.Activity.CREATE, onCreate);
-bot.addListener(Event.Activity.START, onStart);
-bot.addListener(Event.Activity.RESUME, onResume);
-bot.addListener(Event.Activity.PAUSE, onPause);
-bot.addListener(Event.Activity.STOP, onStop);
-bot.addListener(Event.Activity.RESTART, onRestart);
-bot.addListener(Event.Activity.DESTROY, onDestroy);
-bot.addListener(Event.Activity.BACK_PRESSED, onBackPressed);
-
 try {
   if (Database.exists("CompileTime.json")) {
     let T = Database.readObject("CompileTime.json").T;
@@ -162,3 +148,17 @@ function onRestart(activity) {}
 function onDestroy(activity) {}
 
 function onBackPressed(activity) {}
+
+bot.setCommandPrefix(PREFIX); //@로 시작하는 메시지를 command로 판단
+bot.addListener(Event.COMMAND, onCommand);
+bot.addListener(Event.MESSAGE, onMessage);
+bot.addListener(Event.START_COMPILE, onStartCompile);
+
+bot.addListener(Event.Activity.CREATE, onCreate);
+bot.addListener(Event.Activity.START, onStart);
+bot.addListener(Event.Activity.RESUME, onResume);
+bot.addListener(Event.Activity.PAUSE, onPause);
+bot.addListener(Event.Activity.STOP, onStop);
+bot.addListener(Event.Activity.RESTART, onRestart);
+bot.addListener(Event.Activity.DESTROY, onDestroy);
+bot.addListener(Event.Activity.BACK_PRESSED, onBackPressed);
