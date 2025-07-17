@@ -57,7 +57,7 @@ bot.addListener(Event.MESSAGE, onMessage);
 function onCommand(msg) {
   msg.reply("커맨드 수신: " + msg.content);
 
-  if (msg.content === "컴파일") {
+  if (msg.content === "@컴파일") {
     try {
       if (bot.compile()) {
         msg.reply(new Date().toLocaleString + "컴파일 성공");
