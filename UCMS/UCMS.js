@@ -1,4 +1,8 @@
 const bot = BotManager.getCurrentBot();
+const CONFIG = {
+  serverURL: " ",
+  gitAccessKey: " ",
+};
 
 function fetchData(url) {
   try {
@@ -14,45 +18,42 @@ function fetchData(url) {
 
     return data;
   } catch (e) {
-    const nerErr = new Error(`API 호출 오류: ${e}`);
+    const newErr = new Error(`API 호출 오류: ${e}`);
     throw newErr;
   }
 }
 
-/**
- * 주어진 디렉터리에서 'git pull'을 수행하고,
- * stdout/stderr 결과를 모두 출력한 뒤, 종료 코드를 반환합니다.
- *
- * @param {String} repoDir - git pull을 실행할 작업 디렉터리 경로
- * @returns {Number} 프로세스 종료 코드 (0 = 성공)
- */
+// JGit 주요 클래스 import
+var Git = Packages.org.eclipse.jgit.api.Git;
+var FileRepositoryBuilder = Packages.org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+var UsernamePasswordCredentialsProvider =
+  Packages.org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
-function gitPull(repoDir, msg) {
-  // Java 클래스 가져오기
-  var ProcessBuilder = Packages.java.lang.ProcessBuilder;
-  var File = Packages.java.io.File;
-  var BufferedReader = Packages.java.io.BufferedReader;
-  var InputStreamReader = Packages.java.io.InputStreamReader;
+function gitPull(repoDir, username, password, msg) {
+  // 1) 기존 리포지토리 열기
+  var repo = new FileRepositoryBuilder()
+    .setGitDir(new Packages.java.io.File(repoDir + "/.git"))
+    .readEnvironment()
+    .findGitDir()
+    .build();
 
-  // ProcessBuilder 준비
-  var pb = new ProcessBuilder(java.util.Arrays.asList("git", "pull", "origin", "main"));
-  pb.directory(new File(repoDir));
-  pb.redirectErrorStream(true); // stdout와 stderr를 합침
+  // 2) Git 객체 생성
+  var git = Git.wrap(repo);
+  // 또는: Git.open(new File(repoDir))
 
-  // 프로세스 시작
-  var process = pb.start();
-
-  // 출력 읽기
-  var reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-  var line;
-  while ((line = reader.readLine()) !== null) {
-    print(line);
+  // 3) Pull 호출 (인증이 필요 없으면 credentialsProvider 생략 가능)
+  var pullCommand = git.pull();
+  if (username && password) {
+    pullCommand.setCredentialsProvider(
+      new UsernamePasswordCredentialsProvider(username, password)
+    );
   }
+  var result = pullCommand.call();
 
-  // 완료 대기
-  var exitCode = process.waitFor();
-  msg.reply("git pull exited with code: " + exitCode);
-  return exitCode;
+  // 4) 결과 확인
+  msg.reply(result);
+
+  return result.isSuccessful();
 }
 
 /*
@@ -73,7 +74,7 @@ function gitPull(repoDir, msg) {
  */
 function onMessage(msg) {
   bot.send("이경호", msg.author.name + ": " + msg.content);
-  msg.reply("git pull 되냐?");
+  msg.reply("06:20");
 }
 bot.addListener(Event.MESSAGE, onMessage);
 
@@ -96,10 +97,18 @@ function onCommand(msg) {
 
   if (msg.content === "@컴파일") {
     try {
-      gitPull("./", msg);
+      gitPull("./", "gyangho", CONFIG.gitAccessKey, msg);
       bot.compile();
     } catch (err) {
       msg.reply(err);
+    }
+  } else if (msg.content === "@init") {
+    if (Database.exists("config.json")) {
+      const config = Database.readObject("config.json");
+      CONFIG.serverURL = config.serverURL;
+      CONFIG.gitAccessKey = config.gitAccessKey;
+    } else {
+      msg.reply("Cannot Find File : config.json");
     }
   } else {
     try {
