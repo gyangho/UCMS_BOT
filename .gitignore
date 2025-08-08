@@ -1,5 +1,6 @@
 config.js
 database/
+*.code-workspace
 
 # Gradle files
 .gradle/
