@@ -4,6 +4,8 @@ const CONFIG = {
 };
 const PREFIX = "!";
 
+let sbn;
+
 try {
   if (Database.exists("CompileTime.json")) {
     let T = Database.readObject("CompileTime.json").T;
@@ -39,7 +41,6 @@ function init() {
   if (Database.exists("config.json")) {
     const config = Database.readObject("config.json");
     CONFIG.serverURL = config.serverURL;
-    CONFIG.gitAccessKey = config.gitAccessKey;
   } else {
     throw new Error("Cannot Find File : config.json");
   }
@@ -60,7 +61,7 @@ function sendToAdmin(content) {
   admin = "이경호";
 
   if (!bot.send(admin, content, "com.kakao.talk")) {
-    Log.e("[sendToAdmin] Fail");
+    Log.e("[sendToAdmin] Fail" + content);
   }
 }
 
@@ -133,7 +134,6 @@ function onCommand(msg) {
   }
 }
 
-function onNotificationPosted(StatusBarNotification, sbn) {
-  sbn.bindSession("com.kakaobank.channel");
-  sendToAdmin(StatusBarNotification);
+function onNotificationPosted(sbn, sm) {
+  sendToAdmin(sbn);
 }
