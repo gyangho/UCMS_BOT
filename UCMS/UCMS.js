@@ -127,9 +127,18 @@ function onCommand(msg) {
     } catch (err) {
       msg.reply(err);
     }
+  } else if (content.startsWith("인증")) {
+    const auth_code = content.slice(2).trim();
+    try {
+      const url = `${CONFIG.serverURL}/auth?authcode=${auth_code}&chat_room_id=${msg.channelId}`;
+      const res = fetchData(url);
+      msg.reply(res.message);
+    } catch (err) {
+      msg.reply(err);
+    }
   } else {
     try {
-      const url = `${CONFIG.serverURL}?content=${content}&author_name=${msg.author.name}&author_hash=${msg.author.hash}`;
+      const url = `${CONFIG.serverURL}?content=${content}&chat_room_id=${msg.channelId}`;
       msg.reply(fetchData(url));
     } catch (err) {
       msg.reply(err);
