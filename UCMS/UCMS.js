@@ -135,5 +135,11 @@ function onCommand(msg) {
 }
 
 function onNotificationPosted(sbn, sm) {
-  sendToAdmin(sbn);
+  const packageName = sbn.getPackageName();
+  if (!packageName.startsWith("com.kakaobank.channel")) {
+    return;
+  } else {
+    const content = sbn.getNotification().extras.get("android.text").toStrig();
+    sendToAdmin(content);
+  }
 }
