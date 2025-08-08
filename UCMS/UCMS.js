@@ -133,7 +133,7 @@ function onCommand(msg) {
     try {
       url = `${CONFIG.serverURL}/auth?authcode=${auth_code}&chat_room_id=${msg.channelId}`;
       const res = JSON.parse(fetchData(url));
-      msg.reply(res.message);
+      msg.reply(res);
     } catch (err) {
       msg.reply(err);
     }
