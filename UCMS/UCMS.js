@@ -45,13 +45,14 @@ function init() {
     throw new Error("Cannot Find File : config.json");
   }
 
-  bot.removeAllListeners(Event.MESSAGE);
   bot.removeAllListeners(Event.COMMAND);
+  bot.removeAllListeners(Event.MESSAGE);
   bot.removeAllListeners(Event.START_COMPILE);
+  bot.removeAllListeners(Event.NOTIFICATION_POSTED);
 
-  bot.addListener(Event.MESSAGE, onMessage);
   bot.setCommandPrefix(PREFIX); //@로 시작하는 메시지를 command로 판단
   bot.addListener(Event.COMMAND, onCommand);
+  bot.addListener(Event.MESSAGE, onMessage);
   bot.addListener(Event.START_COMPILE, onStartCompile);
   bot.addListener(Event.NOTIFICATION_POSTED, onNotificationPosted);
   sendToAdmin("🥳초기화 완료\n" + checkCostTime(T));
@@ -100,7 +101,9 @@ function fetchData(url) {
  * (bigint) msg.logId: 각 메세지의 고유 id
  * (bigint) msg.channelId: 각 방의 고유 id
  */
-function onMessage(msg) {}
+function onMessage(msg) {
+  return;
+}
 
 /**
  * (string) msg.content: 메시지의 내용
@@ -139,7 +142,9 @@ function onNotificationPosted(sbn, sm) {
   if (!packageName.startsWith("com.kakaobank.channel")) {
     return;
   } else {
-    const content = sbn.getNotification().extras.get("android.text").toString();
-    sendToAdmin(content);
+    const notification = sbn.getNotification();
+    const title = notification.extras.getCharSequence(Notification.EXTRA_TITLE);
+    const content = notification.extras.get("android.text").toString();
+    sendToAdmin(title + content);
   }
 }
