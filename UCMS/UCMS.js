@@ -139,7 +139,7 @@ function onNotificationPosted(sbn, sm) {
   if (!packageName.startsWith("com.kakaobank.channel")) {
     return;
   } else {
-    const content = sbn.getNotification().extras.get("android.text").toStrig();
+    const content = sbn.getNotification().extras.get("android.text").toString();
     sendToAdmin(content);
   }
 }
