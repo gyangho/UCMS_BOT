@@ -52,15 +52,7 @@ function init() {
   bot.setCommandPrefix(PREFIX); //@로 시작하는 메시지를 command로 판단
   bot.addListener(Event.COMMAND, onCommand);
   bot.addListener(Event.START_COMPILE, onStartCompile);
-  // bot.addListener(Event.Activity.CREATE, onCreate);
-  // bot.addListener(Event.Activity.START, onStart);
-  // bot.addListener(Event.Activity.RESUME, onResume);
-  // bot.addListener(Event.Activity.PAUSE, onPause);
-  // bot.addListener(Event.Activity.STOP, onStop);
-  // bot.addListener(Event.Activity.RESTART, onRestart);
-  // bot.addListener(Event.Activity.DESTROY, onDestroy);
-  // bot.addListener(Event.Activity.BACK_PRESSED, onBackPressed);
-
+  bot.addListener(Event.NOTIFICATION_POSTED, onNotificationPosted);
   sendToAdmin("🥳초기화 완료\n" + checkCostTime(T));
 }
 
@@ -107,12 +99,7 @@ function fetchData(url) {
  * (bigint) msg.logId: 각 메세지의 고유 id
  * (bigint) msg.channelId: 각 방의 고유 id
  */
-function onMessage(msg) {
-  if (msg.content === "초기화") {
-    init();
-  } else {
-  }
-}
+function onMessage(msg) {}
 
 /**
  * (string) msg.content: 메시지의 내용
@@ -138,7 +125,7 @@ function onCommand(msg) {
     }
   } else {
     try {
-      const url = `${CONFIG.serverURL}?content=${content}&author=${msg.author.hash}`;
+      const url = `${CONFIG.serverURL}?content=${content}&author_name=${msg.author.name}&author_hash=${msg.author.hash}`;
       msg.reply(fetchData(url));
     } catch (err) {
       msg.reply(err);
@@ -146,23 +133,7 @@ function onCommand(msg) {
   }
 }
 
-function onCreate(savedInstanceState, activity) {
-  var textView = new android.widget.TextView(activity);
-  textView.setText("?");
-  textView.setTextColor(android.graphics.Color.DKGRAY);
-  activity.setContentView(textView);
+function onNotificationPosted(StatusBarNotification, sbn) {
+  sbn.bindSession("com.kakaobank.channel");
+  sendToAdmin(StatusBarNotification);
 }
-
-function onStart(activity) {}
-
-function onResume(activity) {}
-
-function onPause(activity) {}
-
-function onStop(activity) {}
-
-function onRestart(activity) {}
-
-function onDestroy(activity) {}
-
-function onBackPressed(activity) {}
