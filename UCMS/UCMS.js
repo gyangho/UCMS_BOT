@@ -129,9 +129,15 @@ function onCommand(msg) {
       msg.reply(err);
     }
   } else if (content.startsWith("인증")) {
+    if (msg.isGroupChat) {
+      msg.reply(
+        "그룹 채팅방에서는 인증을 수행할 수 없습니다.\n인증은 개인 톡으로만 수행 가능합니다."
+      );
+      return;
+    }
     const auth_code = content.slice(2).trim();
     try {
-      url = `${CONFIG.serverURL}/auth?authcode=${auth_code}&chat_room_id=${msg.channelId}`;
+      url = `${CONFIG.serverURL}/auth?authcode='${auth_code}'&chat_room_id=${msg.channelId}`;
       const res = fetchData(url);
       msg.reply(res);
     } catch (err) {
