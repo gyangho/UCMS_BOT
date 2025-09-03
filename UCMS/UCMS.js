@@ -3,19 +3,18 @@ const CONFIG = {
   serverURL: " ",
 };
 const PREFIX = "!";
-const TIME_CHECK_INTERVAL = 4 * 60 * 60 * 1000; //ms 단위
+const INIT_INTERVAL = 4 * 60 * 60 * 1000; //ms 단위
 
 let sbn;
 
 try {
   if (Database.exists("CompileTime.json")) {
     let T = Database.readObject("CompileTime.json").T;
+    sendToAdmin("👍컴파일 완료!\n" + "[⏱️: " + diffMs(new Date(), T) + "ms]");
   } else {
     throw new Error("Time Measure Error");
   }
-  setInterval(init, TIME_CHECK_INTERVAL);
-
-  sendToAdmin("👍컴파일 및 초기화 완료!\n" + "[⏱️: " + diffMs(new Date(), T) + "ms]");
+  setInterval(init, INIT_INTERVAL);
 } catch (err) {
   sendToAdmin("[" + new Date().toLocaleString + "]\n" + err);
 }
