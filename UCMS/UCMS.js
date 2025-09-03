@@ -157,7 +157,7 @@ function onCommand(msg) {
     }
   } else {
     try {
-      url = `${CONFIG.serverURL}/chat?content=${content}&chat_room_id=${msg.channelId}&isgroupchat=${msg.isGroupChat}&author=${msg.author.authority}`;
+      url = `${CONFIG.serverURL}/chat?content=${content}&chat_room_id=${msg.channelId}&isgroupchat=${msg.isGroupChat}&author=${msg.author}`;
       res = fetchData(url);
       bot.send(
         parseInt(res.chat_room_id),
