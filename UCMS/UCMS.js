@@ -134,7 +134,7 @@ function onCommand(msg) {
     try {
       bot.compile();
     } catch (err) {
-      msg.reply(err);
+      msg.reply(err.stack);
     }
   } else if (content.startsWith("인증")) {
     if (msg.isGroupChat) {
@@ -149,7 +149,7 @@ function onCommand(msg) {
       res = fetchData(url);
       msg.reply(res.message);
     } catch (err) {
-      msg.reply(err);
+      msg.reply(err.stack);
     }
   } else {
     try {
@@ -161,7 +161,7 @@ function onCommand(msg) {
         "com.kakao.talk"
       );
     } catch (err) {
-      msg.reply(err);
+      msg.reply(err.stack);
     }
   }
 }
