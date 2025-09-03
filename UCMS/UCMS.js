@@ -153,7 +153,11 @@ function onCommand(msg) {
     }
   } else {
     try {
-      url = `${CONFIG.serverURL}/chat?content=${content}&chat_room_id=${msg.channelId}&isgroupchat=${msg.isGroupChat}&author=${msg.author.name}`;
+      url = `${CONFIG.serverURL}/chat?content=${encodeURIComponent(
+        content
+      )}&chat_room_id=${msg.channelId}&isgroupchat=${
+        msg.isGroupChat
+      }&author=${msg.author.name}`;
       res = fetchData(url);
       bot.send(
         BigInt(res.chat_room_id),
@@ -179,7 +183,9 @@ function onNotificationPosted(sbn, sm) {
     if (notiContent) {
       const content = notiContent.toString();
 
-      url = `${CONFIG.serverURL}/kakaobank?content=${content}&`;
+      url = `${
+        CONFIG.serverURL
+      }/kakaobank?content=${encodeURIComponent(content)}&`;
       const res = fetchData(url);
       bot.send(
         BigInt(res.chat_room_id),
