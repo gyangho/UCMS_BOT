@@ -155,7 +155,7 @@ function onCommand(msg) {
     try {
       url = `${CONFIG.serverURL}/chat?content=${content}&chat_room_id=${msg.channelId}`;
       res = fetchData(url);
-      msg.reply(res.chat_room_id, res.message);
+      msg.reply(res.chat_room_id, JSON.stringify(res));
     } catch (err) {
       msg.reply(err);
     }
