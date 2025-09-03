@@ -65,9 +65,9 @@ function init() {
 }
 
 function sendToAdmin(content) {
-  admin = "이경호";
+  admin = 441898712178969;
 
-  if (!bot.send(admin, content, "com.kakao.talk")) {
+  if (!bot.send(BigInt(admin), content, "com.kakao.talk")) {
     Log.e("[sendToAdmin] Fail" + content);
   }
 }
@@ -155,8 +155,11 @@ function onCommand(msg) {
     try {
       url = `${CONFIG.serverURL}/chat?content=${content}&chat_room_id=${msg.channelId}&isgroupchat=${msg.isGroupChat}&author=${msg.author.name}`;
       res = fetchData(url);
-      msg.reply(JSON.stringify(res));
-      bot.send(res.chat_room_id, res.message, "com.kakao.talk");
+      bot.send(
+        BigInt(res.chat_room_id),
+        res.message,
+        "com.kakao.talk"
+      );
     } catch (err) {
       msg.reply(err + "\n" + err.stack);
     }
