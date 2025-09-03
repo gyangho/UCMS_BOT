@@ -10,7 +10,9 @@ let sbn;
 try {
   if (Database.exists("CompileTime.json")) {
     let T = Database.readObject("CompileTime.json").T;
-    sendToAdmin("👍컴파일 완료!\n" + "[⏱️: " + diffMs(new Date(), T) + "ms]");
+    sendToAdmin(
+      "👍컴파일 완료!\n" + "[⏱️: " + diffMs(new Date(), T) + "ms]"
+    );
   } else {
     throw new Error("Time Measure Error");
   }
@@ -143,14 +145,15 @@ function onCommand(msg) {
     try {
       url = `${CONFIG.serverURL}/auth?authcode='${auth_code}'&chat_room_id=${msg.channelId}`;
       const res = fetchData(url);
-      msg.reply(res);
+      msg.reply(res.chat_room_id, res.message);
     } catch (err) {
       msg.reply(err);
     }
   } else {
     try {
-      url = `${CONFIG.serverURL}?content=${content}&chat_room_id=${msg.channelId}`;
-      msg.reply(fetchData(url));
+      url = `${CONFIG.serverURL}/chat?content=${content}&chat_room_id=${msg.channelId}`;
+      const res = fetchData(url);
+      msg.reply(res.chat_room_id, res.message);
     } catch (err) {
       msg.reply(err);
     }
@@ -166,7 +169,13 @@ function onNotificationPosted(sbn, sm) {
     const title = notification.extras.getCharSequence(
       android.app.Notification.EXTRA_TITLE
     );
-    const content = notification.extras.get("android.text").toString();
-    sendToAdmin(title + content);
+    const notiContent = notification.extras.get("android.text");
+    if (notiContent) {
+      const content = notiContent.toString();
+
+      url = `${CONFIG.serverURL}/kakaobank?content=${content}&`;
+      const res = fetchData(url);
+      msg.reply(res.chat_room_id, res.message);
+    }
   }
 }
