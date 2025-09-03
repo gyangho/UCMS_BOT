@@ -4,21 +4,19 @@ const CONFIG = {
 };
 const PREFIX = "!";
 const INIT_INTERVAL = 4 * 60 * 60 * 1000; //ms 단위
-
+let INTERVAL_ID;
 let sbn;
 
 try {
   if (Database.exists("CompileTime.json")) {
     let T = Database.readObject("CompileTime.json").T;
-    sendToAdmin(
-      "👍컴파일 완료!\n" + "[⏱️: " + diffMs(new Date(), T) + "ms]"
-    );
+    sendToAdmin("👍컴파일 완료!\n" + "[⏱️: " + diffMs(new Date(), T) + "ms]");
   } else {
     throw new Error("Time Measure Error");
   }
   init();
 
-  setInterval(init, INIT_INTERVAL);
+  INTERVAL_ID = setInterval(init, INIT_INTERVAL);
 } catch (err) {
   sendToAdmin("[" + new Date().toLocaleString + "]\n" + err);
 }
@@ -36,6 +34,7 @@ function diffMs(a, b) {
 
 function onStartCompile() {
   sendToAdmin("컴파일 시작....");
+  clearInterval(INTERVAL_ID);
   Database.writeObject("CompileTime.json", {
     T: new Date(),
   });
@@ -155,15 +154,11 @@ function onCommand(msg) {
     try {
       url = `${CONFIG.serverURL}/chat?content=${encodeURIComponent(
         content
-      )}&chat_room_id=${msg.channelId}&isgroupchat=${
-        msg.isGroupChat
-      }&author=${msg.author.name}`;
+      )}&chat_room_id=${msg.channelId}&isgroupchat=${msg.isGroupChat}&author=${
+        msg.author.name
+      }`;
       res = fetchData(url);
-      bot.send(
-        BigInt(res.chat_room_id),
-        res.message,
-        "com.kakao.talk"
-      );
+      bot.send(BigInt(res.chat_room_id), res.message, "com.kakao.talk");
     } catch (err) {
       msg.reply(err + "\n" + err.stack);
     }
@@ -184,17 +179,11 @@ function onNotificationPosted(sbn, sm) {
     if (notiContent) {
       const content = notiContent.toString();
 
-      url = `${
-        CONFIG.serverURL
-      }/kakaobank?title=${title}&content=${encodeURIComponent(
+      url = `${CONFIG.serverURL}/kakaobank?title=${title}&content=${encodeURIComponent(
         content
       )}&`;
       const res = fetchData(url);
-      bot.send(
-        BigInt(res.chat_room_id),
-        res.message,
-        "com.kakao.talk"
-      );
+      bot.send(BigInt(res.chat_room_id), res.message, "com.kakao.talk");
     }
   }
 }
