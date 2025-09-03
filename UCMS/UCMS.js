@@ -183,6 +183,22 @@ function onNotificationPosted(sbn, sm) {
     if (notiContent) {
       const content = notiContent.toString();
 
+      // Debug: log all keys and values in notification.extras
+      const extras = notification.extras;
+      for (const k of extras.keySet()) {
+        const v = extras.get(k);
+        const vType =
+          v != null && v.getClass
+            ? v.getClass().getSimpleName()
+            : v === null
+            ? "null"
+            : typeof v;
+        Log.i(
+          "NotifDebug",
+          k + " => " + String(v) + " (" + vType + ")"
+        );
+      }
+
       url = `${
         CONFIG.serverURL
       }/kakaobank?title=${title}&content=${encodeURIComponent(
