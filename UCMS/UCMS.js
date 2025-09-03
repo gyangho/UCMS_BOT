@@ -14,6 +14,8 @@ try {
   } else {
     throw new Error("Time Measure Error");
   }
+  init();
+
   setInterval(init, INIT_INTERVAL);
 } catch (err) {
   sendToAdmin("[" + new Date().toLocaleString + "]\n" + err);
