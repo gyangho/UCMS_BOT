@@ -189,7 +189,7 @@ function onNotificationPosted(sbn, sm) {
       android.app.Notification.EXTRA_INFO_TEXT
     );
 
-    console.log(text, bigText, info);
+    Log.i(text, bigText, info);
 
     const notiContent = notification.extras.get("android.text");
     if (notiContent) {
