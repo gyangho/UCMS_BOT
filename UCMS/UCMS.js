@@ -57,7 +57,7 @@ function init() {
   bot.addListener(Event.START_COMPILE, onStartCompile);
   bot.addListener(Event.NOTIFICATION_POSTED, onNotificationPosted);
 
-  setTimeout(bot.compile(), RESTART_INTERVAL);
+  // setTimeout(bot.compile(), RESTART_INTERVAL);
 
   sendToAdmin("🥳초기화 완료\n" + checkCostTime(T));
 }
