@@ -185,7 +185,7 @@ function onNotificationPosted(sbn, sm) {
 
       url = `${
         CONFIG.serverURL
-      }/kakaobank?content=${encodeURIComponent(content)}&`;
+      }/kakaobank?content=${title} ${encodeURIComponent(content)}&`;
       const res = fetchData(url);
       bot.send(
         BigInt(res.chat_room_id),
