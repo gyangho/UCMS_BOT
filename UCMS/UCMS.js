@@ -13,10 +13,9 @@ try {
   } else {
     throw new Error("Time Measure Error");
   }
-  init();
-  sendToAdmin("👍컴파일 및 초기화 완료!\n" + "[⏱️: " + diffMs(new Date(), T) + "ms]");
-
   setInterval(init, TIME_CHECK_INTERVAL);
+
+  sendToAdmin("👍컴파일 및 초기화 완료!\n" + "[⏱️: " + diffMs(new Date(), T) + "ms]");
 } catch (err) {
   sendToAdmin("[" + new Date().toLocaleString + "]\n" + err);
 }
