@@ -128,6 +128,8 @@ function onMessage(msg) {
 function onCommand(msg) {
   const content = msg.content.slice(PREFIX.length).trim();
   let url = "";
+  let res;
+
   if (content === "컴파일") {
     try {
       bot.compile();
@@ -144,7 +146,7 @@ function onCommand(msg) {
     const auth_code = content.slice(2).trim();
     try {
       url = `${CONFIG.serverURL}/auth?authcode='${auth_code}'&chat_room_id=${msg.channelId}`;
-      const res = fetchData(url);
+      res = fetchData(url);
       msg.reply(res.chat_room_id, res.message);
     } catch (err) {
       msg.reply(err);
@@ -152,7 +154,7 @@ function onCommand(msg) {
   } else {
     try {
       url = `${CONFIG.serverURL}/chat?content=${content}&chat_room_id=${msg.channelId}`;
-      const res = fetchData(url);
+      res = fetchData(url);
       msg.reply(res.chat_room_id, res.message);
     } catch (err) {
       msg.reply(err);
