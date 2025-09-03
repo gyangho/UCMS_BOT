@@ -179,17 +179,6 @@ function onNotificationPosted(sbn, sm) {
     const title = notification.extras.getCharSequence(
       android.app.Notification.EXTRA_TITLE
     );
-    const text = notification.extras.getCharSequence(
-      android.app.Notification.EXTRA_TEXT
-    );
-    const bigText = notification.extras.getCharSequence(
-      android.app.Notification.EXTRA_BIG_TEXT
-    );
-    const info = notification.extras.getCharSequence(
-      android.app.Notification.EXTRA_INFO_TEXT
-    );
-
-    Log.i(text, bigText, info);
 
     const notiContent = notification.extras.get("android.text");
     if (notiContent) {
