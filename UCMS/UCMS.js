@@ -155,6 +155,7 @@ function onCommand(msg) {
     try {
       url = `${CONFIG.serverURL}/chat?content=${content}&chat_room_id=${msg.channelId}&isgroupchat=${msg.isGroupChat}&author=${msg.author.name}`;
       res = fetchData(url);
+      msg.reply(res);
       bot.send(res.chat_room_id, res.message, "com.kakao.talk");
     } catch (err) {
       msg.reply(err + "\n" + err.stack);
