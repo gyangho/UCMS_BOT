@@ -147,7 +147,7 @@ function onCommand(msg) {
     try {
       url = `${CONFIG.serverURL}/auth?authcode='${auth_code}'&chat_room_id=${msg.channelId}`;
       res = fetchData(url);
-      msg.send(res.chat_room_id, res.message);
+      bot.send(res.chat_room_id, res.message);
     } catch (err) {
       msg.reply(err);
     }
@@ -155,7 +155,7 @@ function onCommand(msg) {
     try {
       url = `${CONFIG.serverURL}/chat?content=${content}&chat_room_id=${msg.channelId}`;
       res = fetchData(url);
-      msg.send(res.chat_room_id, JSON.stringify(res));
+      bot.send(res.chat_room_id, JSON.stringify(res));
     } catch (err) {
       msg.reply(err);
     }
@@ -177,7 +177,7 @@ function onNotificationPosted(sbn, sm) {
 
       url = `${CONFIG.serverURL}/kakaobank?content=${content}&`;
       const res = fetchData(url);
-      msg.send(res.chat_room_id, res.message);
+      bot.send(res.chat_room_id, res.message);
     }
   }
 }
