@@ -134,7 +134,7 @@ function onCommand(msg) {
     try {
       bot.compile();
     } catch (err) {
-      msg.reply(err.stack);
+      msg.reply(err + "\n" + err.stack);
     }
   } else if (content.startsWith("인증")) {
     if (msg.isGroupChat) {
@@ -149,19 +149,20 @@ function onCommand(msg) {
       res = fetchData(url);
       msg.reply(res.message);
     } catch (err) {
-      msg.reply(err.stack);
+      msg.reply(err + "\n" + err.stack);
     }
   } else {
     try {
       url = `${CONFIG.serverURL}/chat?content=${content}&chat_room_id=${msg.channelId}&isgroupchat=${msg.isGroupChat}&author=${msg.author.name}`;
-      res = JSON.parse(fetchData(url));
+      res = fetchData(url);
+      msg.reply(res);
       bot.send(
         parseInt(res.chat_room_id),
         res.message,
         "com.kakao.talk"
       );
     } catch (err) {
-      msg.reply(err.stack);
+      msg.reply(err + "\n" + err.stack);
     }
   }
 }
