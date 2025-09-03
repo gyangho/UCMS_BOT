@@ -147,11 +147,7 @@ function onCommand(msg) {
     try {
       url = `${CONFIG.serverURL}/auth?authcode='${auth_code}'&chat_room_id=${msg.channelId}`;
       res = fetchData(url);
-      bot.send(
-        parseInt(res.chat_room_id),
-        res.message,
-        "com.kakao.talk"
-      );
+      msg.reply(res.message);
     } catch (err) {
       msg.reply(err);
     }
@@ -161,11 +157,9 @@ function onCommand(msg) {
       res = fetchData(url);
       bot.send(
         parseInt(res.chat_room_id),
-        JSON.stringify(res),
+        res.message,
         "com.kakao.talk"
       );
-
-      msg.reply(res);
     } catch (err) {
       msg.reply(err);
     }
