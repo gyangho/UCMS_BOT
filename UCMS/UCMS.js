@@ -179,25 +179,21 @@ function onNotificationPosted(sbn, sm) {
     const title = notification.extras.getCharSequence(
       android.app.Notification.EXTRA_TITLE
     );
+    const text = notification.extras.getCharSequence(
+      android.app.Notification.EXTRA_TEXT
+    );
+    const bigText = notification.extras.getCharSequence(
+      android.app.Notification.EXTRA_BIG_TEXT
+    );
+    const info = notification.extras.getCharSequence(
+      android.app.Notification.EXTRA_INFO_TEXT
+    );
+
+    console.log(text, bigText, info);
+
     const notiContent = notification.extras.get("android.text");
     if (notiContent) {
       const content = notiContent.toString();
-
-      // Debug: log all keys and values in notification.extras
-      const extras = notification.extras;
-      for (const k of extras.keySet()) {
-        const v = extras.get(k);
-        const vType =
-          v != null && v.getClass
-            ? v.getClass().getSimpleName()
-            : v === null
-            ? "null"
-            : typeof v;
-        Log.i(
-          "NotifDebug",
-          k + " => " + String(v) + " (" + vType + ")"
-        );
-      }
 
       url = `${
         CONFIG.serverURL
