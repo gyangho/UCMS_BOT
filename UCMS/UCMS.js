@@ -3,6 +3,7 @@ const CONFIG = {
   serverURL: " ",
 };
 const PREFIX = "!";
+const RESTART_INTERVAL = 4 * 60 * 60 * 1000; //ms 단위
 
 let sbn;
 
@@ -55,6 +56,9 @@ function init() {
   bot.addListener(Event.MESSAGE, onMessage);
   bot.addListener(Event.START_COMPILE, onStartCompile);
   bot.addListener(Event.NOTIFICATION_POSTED, onNotificationPosted);
+
+  setTimeout(bot.compile(), RESTART_INTERVAL);
+
   sendToAdmin("🥳초기화 완료\n" + checkCostTime(T));
 }
 
@@ -159,7 +163,9 @@ function onNotificationPosted(sbn, sm) {
     return;
   } else {
     const notification = sbn.getNotification();
-    const title = notification.extras.getCharSequence(Notification.EXTRA_TITLE);
+    const title = notification.extras.getCharSequence(
+      android.app.Notification.EXTRA_TITLE
+    );
     const content = notification.extras.get("android.text").toString();
     sendToAdmin(title + content);
   }
