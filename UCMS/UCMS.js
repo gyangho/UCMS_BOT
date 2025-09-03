@@ -84,7 +84,7 @@ function fetchData(url) {
 
     const data = JSON.parse(body);
 
-    return data.message;
+    return data;
   } catch (e) {
     const newErr = new Error(`API 호출 오류: ${e}`);
     throw newErr;
@@ -155,12 +155,7 @@ function onCommand(msg) {
     try {
       url = `${CONFIG.serverURL}/chat?content=${content}&chat_room_id=${msg.channelId}&isgroupchat=${msg.isGroupChat}&author=${msg.author.name}`;
       res = fetchData(url);
-      msg.reply(res);
-      bot.send(
-        parseInt(res.chat_room_id),
-        res.message,
-        "com.kakao.talk"
-      );
+      bot.send(res.chat_room_id, res.message, "com.kakao.talk");
     } catch (err) {
       msg.reply(err + "\n" + err.stack);
     }
@@ -182,11 +177,7 @@ function onNotificationPosted(sbn, sm) {
 
       url = `${CONFIG.serverURL}/kakaobank?content=${content}&`;
       const res = fetchData(url);
-      bot.send(
-        parseInt(res.chat_room_id),
-        res.message,
-        "com.kakao.talk"
-      );
+      bot.send(res.chat_room_id, res.message, "com.kakao.talk");
     }
   }
 }
