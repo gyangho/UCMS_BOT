@@ -164,6 +164,8 @@ function onCommand(msg) {
         JSON.stringify(res),
         "com.kakao.talk"
       );
+
+      msg.reply(res);
     } catch (err) {
       msg.reply(err);
     }
