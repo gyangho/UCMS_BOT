@@ -181,7 +181,11 @@ function onNotificationPosted(sbn, sm) {
 
       url = `${CONFIG.serverURL}/kakaobank?content=${content}&`;
       const res = fetchData(url);
-      bot.send(res.chat_room_id, res.message, "com.kakao.talk");
+      bot.send(
+        BigInt(res.chat_room_id),
+        res.message,
+        "com.kakao.talk"
+      );
     }
   }
 }
